@@ -4,7 +4,6 @@ const { https } = require('follow-redirects');
 const unzipper = require('unzipper');
 
 const app = express();
-const port = 12345;
 
 function archiveAwait(archive, fns) {
     if (Array.isArray(fns)) {
@@ -82,6 +81,10 @@ app.get('/', (req, res) => {
     res.redirect("https://3ds.hacks.guide");
 })
 
-app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`);
-})
+const port = process.env.PORT || 12345;
+const host = process.env.HOST;
+
+const server = app.listen(port, host, () => {
+    const addr = server.address();
+    console.log(`Server listening on ${addr.family ? `${addr.family === "IPv6" ? `[${addr.address}]` : addr.address}:${addr.port}` : addr }`);
+});
