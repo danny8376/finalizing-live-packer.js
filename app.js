@@ -27,7 +27,7 @@ function appendZipRemap(archive, agent, url, mapping, ci) { // ci => case insens
     const fns = Object.values(mapping);
     if (ci) {
         Object.entries(mapping).forEach(([k, v]) => {
-            mapping[ktoLowerCase()] = v;
+            mapping[k.toLowerCase()] = v;
         });
     }
     https.get(url, { agent }, (res) => {
