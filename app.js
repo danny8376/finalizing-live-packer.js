@@ -57,6 +57,8 @@ app.get('/finalize', async (req, res) => {
         maxSockets: 2
     });
     const archive = archiver('zip');
+    res.set('Content-Type', 'application/zip');
+    res.set('Content-Disposition', 'attachment; filename="finalizing.zip"');
     archive.pipe(res);
     const files = [];
     files.push(appendZipRemap(archive, agent, "https://github.com/d0k3/GodMode9/releases/download/v2.1.1/GodMode9-v2.1.1-20220322194259.zip", {
