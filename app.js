@@ -60,19 +60,19 @@ app.get('/finalize', async (req, res) => {
     res.set('Content-Type', 'application/zip');
     res.set('Content-Disposition', 'attachment; filename="finalizing.zip"');
     archive.pipe(res);
-    const files = [];
-    files.push(appendZipRemap(archive, agent, "https://github.com/d0k3/GodMode9/releases/download/v2.1.1/GodMode9-v2.1.1-20220322194259.zip", {
-        "GodMode9.firm": "luma/payloads/GodMode9.firm",
-        "gm9/scripts/GM9Megascript.gm9": "finalize/GM9Megascript.gm9"
-    }));
-    files.push(appendUrl(archive, agent, "gm9/scripts/finalize.gm9", "https://raw.githubusercontent.com/Gruetzig/finalizing-script/main/script/finalize.gm9"));
-    files.push(appendUrl(archive, agent, "finalize/Anemone3DS.cia", "https://github.com/astronautlevel2/Anemone3DS/releases/latest/download/Anemone3DS.cia"));
-    files.push(appendUrl(archive, agent, "finalize/Checkpoint.cia", "https://github.com/BernardoGiordano/Checkpoint/releases/download/v3.7.4/Checkpoint.cia"));
-    files.push(appendUrl(archive, agent, "finalize/Homebrew_Launcher.cia", "https://github.com/PabloMK7/homebrew_launcher_dummy/releases/latest/download/Homebrew_Launcher.cia"));
-    files.push(appendUrl(archive, agent, "finalize/FBI.cia", "https://github.com/Steveice10/FBI/releases/latest/download/FBI.cia"));
-    files.push(appendUrl(archive, agent, "finalize/ftpd.cia", "https://github.com/mtheall/ftpd/releases/latest/download/ftpd.cia"));
-    files.push(appendUrl(archive, agent, "finalize/Universal-Updater.cia", "https://github.com/Universal-Team/Universal-Updater/releases/latest/download/Universal-Updater.cia"));
-    await Promise.all(files);
+    await Promise.all([
+        appendZipRemap(archive, agent, "https://github.com/d0k3/GodMode9/releases/download/v2.1.1/GodMode9-v2.1.1-20220322194259.zip", {
+            "GodMode9.firm": "luma/payloads/GodMode9.firm",
+            "gm9/scripts/GM9Megascript.gm9": "finalize/GM9Megascript.gm9"
+        }),
+        appendUrl(archive, agent, "gm9/scripts/finalize.gm9", "https://raw.githubusercontent.com/Gruetzig/finalizing-script/main/script/finalize.gm9"),
+        appendUrl(archive, agent, "finalize/Anemone3DS.cia", "https://github.com/astronautlevel2/Anemone3DS/releases/latest/download/Anemone3DS.cia"),
+        appendUrl(archive, agent, "finalize/Checkpoint.cia", "https://github.com/BernardoGiordano/Checkpoint/releases/download/v3.7.4/Checkpoint.cia"),
+        appendUrl(archive, agent, "finalize/Homebrew_Launcher.cia", "https://github.com/PabloMK7/homebrew_launcher_dummy/releases/latest/download/Homebrew_Launcher.cia"),
+        appendUrl(archive, agent, "finalize/FBI.cia", "https://github.com/Steveice10/FBI/releases/latest/download/FBI.cia"),
+        appendUrl(archive, agent, "finalize/ftpd.cia", "https://github.com/mtheall/ftpd/releases/latest/download/ftpd.cia"),
+        appendUrl(archive, agent, "finalize/Universal-Updater.cia", "https://github.com/Universal-Team/Universal-Updater/releases/latest/download/Universal-Updater.cia"),
+    ]);
     archive.finalize();
 })
 
