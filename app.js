@@ -54,7 +54,7 @@ function appendUrl(archive, agent, fn, url) {
 app.get('/finalize', async (req, res) => {
     const agent = new https.Agent({
         keepAlive: true,
-        maxSockets: 2
+        maxSockets: 3
     });
     const archive = archiver('zip');
     res.set('Content-Type', 'application/zip');
@@ -65,7 +65,9 @@ app.get('/finalize', async (req, res) => {
             "GodMode9.firm": "luma/payloads/GodMode9.firm",
             "gm9/scripts/GM9Megascript.gm9": "finalize/GM9Megascript.gm9"
         }, true),
-        appendUrl(archive, agent, "gm9/scripts/finalize.gm9", "https://raw.githubusercontent.com/Gruetzig/finalizing-script/main/script/finalize.gm9"),
+        appendZipRemap(archive, agent, "https://github.com/hacks-guide/Guide_3DS/raw/master/assets/finalizing.zip", {
+            "gm9/scripts/finalize.gm9": "gm9/scripts/finalize.gm9"
+        }, true),
         appendUrl(archive, agent, "finalize/Anemone3DS.cia", "https://github.com/astronautlevel2/Anemone3DS/releases/latest/download/Anemone3DS.cia"),
         appendUrl(archive, agent, "finalize/Checkpoint.cia", "https://github.com/BernardoGiordano/Checkpoint/releases/download/v3.7.4/Checkpoint.cia"),
         appendUrl(archive, agent, "finalize/Homebrew_Launcher.cia", "https://github.com/PabloMK7/homebrew_launcher_dummy/releases/latest/download/Homebrew_Launcher.cia"),
